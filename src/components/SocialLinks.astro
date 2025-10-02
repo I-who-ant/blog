@@ -1,0 +1,22 @@
+---
+export interface SocialLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  links: SocialLink[];
+}
+
+const { title = 'Social', links } = Astro.props as Props;
+---
+
+<section class="social-section">
+  <div class="social-title">{title}</div>
+  {links.map((link) => (
+    <a class="social-link" href={link.href} target="_blank" rel="noopener noreferrer">
+      {link.label}
+    </a>
+  ))}
+</section>

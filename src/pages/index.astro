@@ -1,6 +1,8 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PostList from '../components/PostList.astro';
 
 const posts = await getCollection('posts');
 const latestPosts = posts
@@ -9,21 +11,13 @@ const latestPosts = posts
 ---
 
 <MainLayout>
-  <section>
-    <h1>seeback の blog</h1>
-    <p>记录学习、开发与生活的片段，现在以 Astro 静态站的形式呈现。</p>
-  </section>
+  <PageHeader
+    title="seeback の blog"
+    description="记录学习、开发与生活的片段，现在以 Astro 静态站的形式呈现。"
+  />
 
-  <section>
-    <h2>最新文章</h2>
-    <ul>
-      {latestPosts.map((post) => (
-        <li>
-          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-          {post.data.excerpt && <p>{post.data.excerpt}</p>}
-          <small>{post.data.date}</small>
-        </li>
-      ))}
-    </ul>
+  <section class="section-block">
+    <h2 class="section-title">最新文章</h2>
+    <PostList posts={latestPosts} />
   </section>
 </MainLayout>

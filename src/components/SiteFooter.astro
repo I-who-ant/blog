@@ -1,0 +1,49 @@
+---
+export interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  links: FooterLink[];
+  siteName: string;
+  copyright: string;
+  rssHref?: string;
+}
+
+const { links, siteName, copyright, rssHref = '/rss.xml' } = Astro.props as Props;
+---
+
+<footer class="global-footer">
+  <div class="footer-divider"></div>
+
+  <nav class="footer-links">
+    {links.map((link, index) => (
+      <span class="footer-link-group">
+        <a
+          class="footer-link"
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+        >
+          {link.label}
+        </a>
+        {index < links.length - 1 && <span class="separator">|</span>}
+      </span>
+    ))}
+  </nav>
+
+  <div class="footer-meta">
+    <span>{copyright}</span>
+    <span>Powered by {siteName}</span>
+  </div>
+
+  {rssHref && (
+    <div class="footer-icons">
+      <a class="icon-link" href={rssHref} target="_blank" rel="noopener noreferrer" aria-label="RSS">
+        📡
+      </a>
+    </div>
+  )}
+</footer>

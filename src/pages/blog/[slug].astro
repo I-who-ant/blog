@@ -1,6 +1,7 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -20,9 +21,10 @@ const { data } = match;
 ---
 
 <MainLayout>
-  <article>
-    <h1>{data.title}</h1>
-    <p><small>{data.date}</small></p>
+  <article class="article-container">
+    <PageHeader title={data.title}>
+      <time class="post-date">{data.date}</time>
+    </PageHeader>
     <Content />
   </article>
 </MainLayout>

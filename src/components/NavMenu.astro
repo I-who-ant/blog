@@ -1,0 +1,27 @@
+---
+export interface NavItem {
+  path: string;
+  label: string;
+  hide?: boolean;
+}
+
+interface Props {
+  items: NavItem[];
+  currentPath: string;
+}
+
+const { items, currentPath } = Astro.props as Props;
+---
+
+<nav class="nav-menu">
+  {items
+    .filter((item) => !item.hide)
+    .map((item) => (
+      <a
+        href={item.path}
+        class:list={['nav-item', { active: currentPath === item.path || currentPath.startsWith(`${item.path}/`) }]}
+      >
+        {item.label}
+      </a>
+    ))}
+</nav>

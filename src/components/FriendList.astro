@@ -1,0 +1,28 @@
+---
+interface Friend {
+  name: string;
+  url: string;
+  description?: string;
+}
+
+interface Props {
+  friends: Friend[];
+}
+
+const { friends } = Astro.props as Props;
+---
+
+{friends.length === 0 ? (
+  <p class="empty-tip">暂无友链，欢迎邮件联系互换链接。</p>
+) : (
+  <ul class="friend-list">
+    {friends.map((friend) => (
+      <li class="friend-item">
+        <a class="friend-link" href={friend.url} target="_blank" rel="noopener noreferrer">
+          {friend.name}
+        </a>
+        {friend.description && <span class="friend-description">{friend.description}</span>}
+      </li>
+    ))}
+  </ul>
+)}

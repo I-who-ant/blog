@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  basePath?: string;
+  showExcerpt?: boolean;
+  showDate?: boolean;
+  emptyText?: string;
+}
+
+const {
+  posts,
+  basePath = '/blog',
+  showExcerpt = true,
+  showDate = true,
+  emptyText = '暂无文章，欢迎稍后再来。',
+} = Astro.props as Props;
+---
+
+{posts.length === 0 ? (
+  <p class="empty-tip">{emptyText}</p>
+) : (
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li class="post-item">
+        <a class="post-link" href={`${basePath}/${post.slug}/`}>
+          <h3 class="post-title">{post.data.title}</h3>
+        </a>
+        {showExcerpt && post.data.excerpt && <p class="post-excerpt">{post.data.excerpt}</p>}
+        {showDate && <time class="post-date">{post.data.date}</time>}
+      </li>
+    ))}
+  </ul>
+)}

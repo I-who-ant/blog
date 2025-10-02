@@ -1,22 +1,14 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
 import { getEntry } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FriendList from '../components/FriendList.astro';
 
 const friends = await getEntry('friends', 'friends');
 const list = friends?.data ?? [];
 ---
 
 <MainLayout>
-  <section>
-    <h1>Friends</h1>
-    <p>朋友们的链接如下，欢迎互换友链～</p>
-    <ul>
-      {list.map((item) => (
-        <li>
-          <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a>
-          {item.description && <span> — {item.description}</span>}
-        </li>
-      ))}
-    </ul>
-  </section>
+  <PageHeader title="Friends" description="欢迎互换友链，可通过邮箱或 Issue 留言。" />
+  <FriendList friends={list} />
 </MainLayout>

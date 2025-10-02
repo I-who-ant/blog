@@ -1,10 +1,11 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <MainLayout>
-  <section>
-    <h1>你好，我是 seeback</h1>
+  <PageHeader title="你好，我是 seeback" />
+  <section class="paragraph-group">
     <p>
       在校大学生，主攻 Java 后端与前端开发，对全栈技术保持好奇。这个博客承载学习笔记、项目心得以及生活碎片，现已迁移到 Astro
       以获得更好的静态站体验。

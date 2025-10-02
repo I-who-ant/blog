@@ -1,11 +1,8 @@
 ---
 import '../styles/base.css';
-
-interface NavItem {
-  path: string;
-  label: string;
-  hide?: boolean;
-}
+import NavMenu, { type NavItem } from '../components/NavMenu.astro';
+import SocialLinks, { type SocialLink } from '../components/SocialLinks.astro';
+import SiteFooter, { type FooterLink } from '../components/SiteFooter.astro';
 
 const navItems: NavItem[] = [
   { path: '/', label: 'Home' },
@@ -13,6 +10,17 @@ const navItems: NavItem[] = [
   { path: '/link-friend', label: 'Friends' },
   { path: '/about', label: 'About', hide: true },
   { path: '/changelog', label: 'Changelog' },
+];
+
+const socialLinks: SocialLink[] = [
+  { label: 'GitHub', href: 'https://github.com/I-who-ant' },
+  { label: 'Email', href: 'mailto:2391934808@qq.com' },
+  { label: 'Music', href: 'https://music.163.com/#/user/home?id=467741872' },
+];
+
+const footerLinks: FooterLink[] = [
+  { label: 'about', href: '/about' },
+  { label: 'rss', href: '/rss.xml', external: true },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -34,34 +42,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
           </a>
         </div>
 
-        <nav class="nav-menu">
-          {navItems
-            .filter((item) => !item.hide)
-            .map((item) => (
-              <a
-                href={item.path}
-                class:list={['nav-item', { active: currentPath === item.path || currentPath.startsWith(item.path + '/') }]}
-              >
-                {item.label}
-              </a>
-            ))}
-        </nav>
+        <NavMenu items={navItems} currentPath={currentPath} />
 
-        <section class="social-section">
-          <div class="social-title">Social</div>
-          <a class="social-link" href="https://github.com/I-who-ant" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          <a class="social-link" href="mailto:2391934808@qq.com">Email</a>
-          <a
-            class="social-link"
-            href="https://music.163.com/#/user/home?id=467741872"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Music
-          </a>
-        </section>
+        <SocialLinks links={socialLinks} />
       </aside>
 
       <main class="main-layout">
@@ -69,26 +52,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
           <slot />
         </div>
 
-        <footer class="global-footer">
-          <div class="footer-divider"></div>
-
-          <nav class="footer-links">
-            <a class="footer-link" href="/about">about</a>
-            <span class="separator">|</span>
-            <a class="footer-link" href="/rss.xml" target="_blank" rel="noopener noreferrer">rss</a>
-          </nav>
-
-          <div class="footer-meta">
-            <span>Copyright © 2021-2025 seeback</span>
-            <span>Powered by seebackのblog</span>
-          </div>
-
-          <div class="footer-icons">
-            <a class="icon-link" href="/rss.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS">
-              📡
-            </a>
-          </div>
-        </footer>
+        <SiteFooter
+          links={footerLinks}
+          siteName="seeback の blog"
+          copyright="Copyright © 2021-2025 seeback"
+        />
       </main>
     </div>
   </body>

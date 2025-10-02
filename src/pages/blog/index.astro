@@ -1,23 +1,14 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PostList from '../../components/PostList.astro';
 
 const posts = await getCollection('posts');
 const sortedPosts = posts.sort((a, b) => b.data.date.localeCompare(a.data.date));
 ---
 
 <MainLayout>
-  <section>
-    <h1>文章列表</h1>
-    <p>以下内容来自 `src/content/posts`，可通过 Markdown 管理。</p>
-    <ul>
-      {sortedPosts.map((post) => (
-        <li>
-          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-          {post.data.excerpt && <p>{post.data.excerpt}</p>}
-          <small>{post.data.date}</small>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <PageHeader title="文章列表" description="Markdown 文件位于 src/content/posts 目录，提交即更新。" />
+  <PostList posts={sortedPosts} />
 </MainLayout>
