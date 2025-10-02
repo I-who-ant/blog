@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+const latestPosts = posts
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 3);
+---
+
+<MainLayout>
+  <section>
+    <h1>seeback の blog</h1>
+    <p>记录学习、开发与生活的片段，现在以 Astro 静态站的形式呈现。</p>
+  </section>
+
+  <section>
+    <h2>最新文章</h2>
+    <ul>
+      {latestPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+          {post.data.excerpt && <p>{post.data.excerpt}</p>}
+          <small>{post.data.date}</small>
+        </li>
+      ))}
+    </ul>
+  </section>
+</MainLayout>

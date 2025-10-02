@@ -1,0 +1,22 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getEntry } from 'astro:content';
+
+const friends = await getEntry('friends', 'friends');
+const list = friends?.data ?? [];
+---
+
+<MainLayout>
+  <section>
+    <h1>Friends</h1>
+    <p>朋友们的链接如下，欢迎互换友链～</p>
+    <ul>
+      {list.map((item) => (
+        <li>
+          <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a>
+          {item.description && <span> — {item.description}</span>}
+        </li>
+      ))}
+    </ul>
+  </section>
+</MainLayout>
