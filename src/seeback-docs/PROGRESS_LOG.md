@@ -31,3 +31,12 @@
   - 为 `blog/[slug].astro` 补充 `getStaticPaths` 并改用集合中返回的数据，解决静态构建需求。
   - 运行 `npm run build`，成功生成静态产物（共 7 个页面）。
 - 说明：构建流程已打通，后续可在本地 `npm run dev` 开发、`npm run build` 产出部署文件。
+
+## 阶段五（内容生产自动化）
+- 日期：2025-10-03
+- 内容：
+  - 为 Typora 插件 `article_uploader` 新增 `AstroUploader`，直接将当前 Markdown 写入 `src/content/posts`，自动生成符合集合 schema 的 frontmatter。
+  - 扩展插件配置、热键与多语言文案，支持自定义仓库路径、文件命名模板以及可选 Git 命令，用于一键保存或推送。
+  - 优化 `uploadUtils`，优先解析 Typora 文档中的 YAML frontmatter，将 `title`、`date`、`tags` 等元数据回写至 Astro 文件。
+  - 更新插件 README，记录 Astro 集成使用方法；脚本 `install_linux.sh` 无需调整。
+- 说明：完成 Typora → Astro 的无缝写作链路，后续写作可在 Typora 端一键同步到本地仓库，再视需要执行构建或推送。
