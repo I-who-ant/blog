@@ -9,6 +9,6 @@ const sortedPosts = posts.sort((a, b) => b.data.date.localeCompare(a.data.date))
 ---
 
 <MainLayout>
-  <PageHeader title="文章列表" description="Markdown 文件位于 src/content/posts 目录，提交即更新。" />
+  <PageHeader title="Recently Write" tooltip="最近没写就是在摆烂（来催我吧" />
   <PostList posts={sortedPosts} />
 </MainLayout>

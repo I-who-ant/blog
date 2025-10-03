@@ -1,0 +1,33 @@
+# Astro 迁移进度记录
+
+## 阶段一（初始化骨架）
+- 日期：2024-05-09
+- 内容：
+  - 在 `starlight-main/examples` 下创建 `seeback-astro` 项目目录。
+  - 新建基础配置：`package.json`、`astro.config.mjs`、`tsconfig.json`。
+  - 建立 `src/pages/index.astro` 占位页面，确认 Astro 站点结构启动。
+- 说明：此阶段仅完成骨架搭建，尚未迁移任何布局或样式，后续将在此基础上引入 `MainLayout` 与内容体系。
+
+## 阶段二（布局与页面框架）
+- 日期：2024-05-09
+- 内容：
+  - 创建 `src/layouts/MainLayout.astro`，将 Vue 版本的侧边栏、社交链接、全局页脚迁移到 Astro。
+  - 新增基础样式文件 `src/styles/base.css`，统一区域配色与响应式规则。
+  - 初始化关键页面入口：`index.astro`、`blog/index.astro`、`blog/[slug].astro`、`about.astro`、`link-friend.astro`、`changelog.astro`，并全部接入 `MainLayout`。
+- 说明：目前页面为占位内容，仅保证路由与框架结构一致。下一阶段将迁移 Markdown 数据与真实文案。
+
+## 阶段三（内容体系迁移）
+- 日期：2024-05-09
+- 内容：
+  - 新建 `src/content/` 目录与 `content.config.ts`，定义 `posts`（Markdown）与 `friends`（数据）集合。
+  - 将示例文章迁移为 Markdown 文件，首页、列表、详情页面通过集合动态渲染。
+  - 友链页面读取 `friends.json`，About、Changelog 页面填入真实文案。
+- 说明：已完成内容层迁移，下一阶段将集中在构建验证、RSS 等配套能力。
+
+## 阶段四（构建验证）
+- 日期：2024-05-09
+- 内容：
+  - 调整 Markdown frontmatter：将日期字段统一使用字符串形式，以满足集合 schema。
+  - 为 `blog/[slug].astro` 补充 `getStaticPaths` 并改用集合中返回的数据，解决静态构建需求。
+  - 运行 `npm run build`，成功生成静态产物（共 7 个页面）。
+- 说明：构建流程已打通，后续可在本地 `npm run dev` 开发、`npm run build` 产出部署文件。

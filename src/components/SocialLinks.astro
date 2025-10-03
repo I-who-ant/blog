@@ -1,7 +1,10 @@
 ---
+import Icons from './Icons.astro';
+
 export interface SocialLink {
   label: string;
   href: string;
+  icon?: string;
 }
 
 interface Props {
@@ -16,7 +19,13 @@ const { title = 'Social', links } = Astro.props as Props;
   <div class="social-title">{title}</div>
   {links.map((link) => (
     <a class="social-link" href={link.href} target="_blank" rel="noopener noreferrer">
+      {link.icon && <Icons name={link.icon} size={16} class="social-icon" />}
       {link.label}
     </a>
   ))}
+
+  <div class="sidebar-footer">
+    <div class="sidebar-copyright">© 2024 - 2025 Seeback</div>
+    <div class="sidebar-rights">All rights free.</div>
+  </div>
 </section>

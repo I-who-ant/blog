@@ -2,13 +2,14 @@
 interface Props {
   title: string;
   description?: string;
+  tooltip?: string;
 }
 
-const { title, description } = Astro.props as Props;
+const { title, description, tooltip } = Astro.props as Props;
 ---
 
 <header class="page-header">
-  <h1 class="page-title">{title}</h1>
+  <h1 class="page-title" title={tooltip}>{title}</h1>
   {description && <p class="page-description">{description}</p>}
   <slot />
 </header>

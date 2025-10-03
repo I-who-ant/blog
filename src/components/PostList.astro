@@ -21,14 +21,19 @@ const {
 {posts.length === 0 ? (
   <p class="empty-tip">{emptyText}</p>
 ) : (
-  <ul class="post-list">
+  <ul class="blog-list">
     {posts.map((post) => (
-      <li class="post-item">
-        <a class="post-link" href={`${basePath}/${post.slug}/`}>
-          <h3 class="post-title">{post.data.title}</h3>
-        </a>
-        {showExcerpt && post.data.excerpt && <p class="post-excerpt">{post.data.excerpt}</p>}
-        {showDate && <time class="post-date">{post.data.date}</time>}
+      <li class="blog-item">
+        <div class="blog-left">
+          <time class="blog-date">{post.data.date}</time>
+          <span class="blog-category">• 分享境</span>
+        </div>
+        <div class="blog-right">
+          <a class="blog-link" href={`${basePath}/${post.slug}/`}>
+            <h3 class="blog-title">{post.data.title}</h3>
+          </a>
+          {showExcerpt && post.data.excerpt && <p class="blog-excerpt">{post.data.excerpt}</p>}
+        </div>
       </li>
     ))}
   </ul>

@@ -1,23 +1,64 @@
 ---
-import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import PostList from '../components/PostList.astro';
-
-const posts = await getCollection('posts');
-const latestPosts = posts
-  .sort((a, b) => b.data.date.localeCompare(a.data.date))
-  .slice(0, 3);
+import Icons from '../components/Icons.astro';
 ---
 
 <MainLayout>
-  <PageHeader
-    title="seeback の blog"
-    description="记录学习、开发与生活的片段，现在以 Astro 静态站的形式呈现。"
-  />
+  <div class="home-container">
+    <div class="intro-section">
+      <div class="greeting">
+        <span class="text-primary">Hello,</span><br/>
+        <span class="text-primary">I'm</span> <span class="name-highlight">seeback</span> <span class="name-pronunciation">/'siːbæk/</span>
+      </div>
 
-  <section class="section-block">
-    <h2 class="section-title">最新文章</h2>
-    <PostList posts={latestPosts} />
-  </section>
+      <div class="subtitle">
+        Student / Programming Enthusiast / Lifelong Learner
+      </div>
+
+      <div class="action-buttons">
+        <a href="/blog" class="btn btn-primary">
+          <Icons name="blog" size={16} class="btn-icon" /> Blog
+        </a>
+        <a href="https://github.com/I-who-ant" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          <Icons name="github" size={16} class="btn-icon" /> GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-block">
+        <span class="info-label">i am</span>
+        <div class="info-content">
+          <div>一名普通的在校大学生</div>
+          <div>正在准备考研的编程爱好者</div>
+          <div>热爱学习新技术和探索未知领域</div>
+          <div>积极向各路技术大佬学习的小白</div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <span class="info-label">about me</span>
+        <div class="info-content">
+          <p>我是一名普通的大学生，热爱编程，正在考研的路上努力前行。虽然技术水平还不够深入，但对编程充满热情，喜欢探索各种新技术。</p>
+
+          <p>正致力于学习自己喜欢的技术栈，包括 <span class="highlight-tech">Java</span>、<span class="highlight-tech">Vue.js</span>、<span class="highlight-tech">Spring Boot</span> 等。希望通过不断学习和实践来提升自己。</p>
+
+          <p>在学习过程中，我喜欢记录和分享自己的学习心得，向各种技术大佬们学习。除了编程，我也喜欢看技术文档、学习新知识，偶尔也会放松一下看看动漫、电影。</p>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <span class="info-label">find me at</span>
+        <div class="social-links-grid">
+          <a href="https://github.com/I-who-ant" class="social-item" target="_blank" rel="noopener noreferrer">
+            <Icons name="github" size={16} class="social-icon" /> GITHUB
+          </a>
+          <a href="https://t.me/seebacker" class="social-item" target="_blank" rel="noopener noreferrer">
+            <Icons name="telegram" size={16} class="social-icon" /> TELEGRAM
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </MainLayout>

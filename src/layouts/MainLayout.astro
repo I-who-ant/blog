@@ -6,16 +6,15 @@ import SiteFooter, { type FooterLink } from '../components/SiteFooter.astro';
 
 const navItems: NavItem[] = [
   { path: '/', label: 'Home' },
-  { path: '/blog', label: 'My life' },
+  { path: '/projects', label: 'Projects' },
+  { path: '/blog', label: 'Writings' },
   { path: '/link-friend', label: 'Friends' },
-  { path: '/about', label: 'About', hide: true },
   { path: '/changelog', label: 'Changelog' },
 ];
 
 const socialLinks: SocialLink[] = [
-  { label: 'GitHub', href: 'https://github.com/I-who-ant' },
-  { label: 'Email', href: 'mailto:2391934808@qq.com' },
-  { label: 'Music', href: 'https://music.163.com/#/user/home?id=467741872' },
+  { label: 'GitHub', href: 'https://github.com/I-who-ant', icon: 'github' },
+  { label: 'Telegram', href: 'https://t.me/seebacker', icon: 'telegram' },
 ];
 
 const footerLinks: FooterLink[] = [

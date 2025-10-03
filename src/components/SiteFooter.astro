@@ -34,16 +34,4 @@ const { links, siteName, copyright, rssHref = '/rss.xml' } = Astro.props as Prop
     ))}
   </nav>
 
-  <div class="footer-meta">
-    <span>{copyright}</span>
-    <span>Powered by {siteName}</span>
-  </div>
-
-  {rssHref && (
-    <div class="footer-icons">
-      <a class="icon-link" href={rssHref} target="_blank" rel="noopener noreferrer" aria-label="RSS">
-        📡
-      </a>
-    </div>
-  )}
 </footer>
