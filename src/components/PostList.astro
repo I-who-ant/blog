@@ -26,7 +26,11 @@ const {
       <li class="blog-item">
         <div class="blog-left">
           <time class="blog-date">{post.data.date}</time>
-          <span class="blog-category">• 分享境</span>
+          {post.data.tags && post.data.tags.length > 0 ? (
+            <span class="blog-category">#{post.data.tags[0]}</span>
+          ) : (
+            <span class="blog-category"># 未分类</span>
+          )}
         </div>
         <div class="blog-right">
           <a class="blog-link" href={`${basePath}/${post.slug}/`}>
