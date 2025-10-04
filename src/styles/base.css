@@ -567,10 +567,11 @@ a:hover {
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
   white-space: pre;
   word-break: normal;
+  scrollbar-color: rgba(148, 163, 184, 0.45) rgba(22, 31, 45, 0.94);
 }
 
 .article-container :global(pre:hover) {
-  scrollbar-color: rgba(148, 163, 184, 0.5) rgba(30, 42, 58, 0.8);
+  scrollbar-color: rgba(196, 207, 240, 0.65) rgba(22, 31, 45, 0.94);
 }
 
 .article-container :global(pre::-webkit-scrollbar) {
@@ -596,7 +597,7 @@ a:hover {
 }
 
 .article-container :global(pre::-webkit-scrollbar-thumb) {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(148, 163, 184, 0.45);
   border-radius: 999px;
 }
 
