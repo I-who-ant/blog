@@ -593,6 +593,64 @@ a:hover {
   background: rgba(196, 207, 240, 0.65);
 }
 
+.soon {
+  align-items: center;
+  text-align: center;
+  min-height: 60vh;
+}
+
+.soon-subtitle {
+  color: #cbd5f5;
+  margin-top: 12px;
+}
+
+.soon-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #d1d9e2;
+}
+
+.soon-link {
+  color: #8da2ff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.soon-link:hover {
+  border-bottom-color: #8da2ff;
+}
+
+.not-found {
+  align-items: center;
+  text-align: center;
+  min-height: 60vh;
+}
+
+.not-found-subtitle {
+  color: #cbd5f5;
+  margin-top: 12px;
+}
+
+.not-found-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #d1d9e2;
+}
+
+.not-found-link {
+  color: #8da2ff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.not-found-link:hover {
+  border-bottom-color: #8da2ff;
+}
+
 .article-container :global(code) {
   font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   background: rgba(148, 163, 184, 0.18);
