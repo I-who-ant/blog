@@ -57,4 +57,15 @@
 - 架构理解、组件职责等补充说明写入 `UNDERSTAND.md` 以便共享知识。
 - 新成员入场时引用本手册；若流程或工具变动请及时修订。
 
-_最后更新：2025-10-03（与 `UNDERSTAND.md` v1.2 符号图标规范保持一致）_
+## 10. 自动化与上传规则
+- Typora 端启用 `article_uploader` 后，默认命令模板为 `git add '{filepath}' {assets} && git commit -m 'publish: {filename}' && git push`；如需调整请同步更新 `settings.user.toml` 并验证命令可重复执行。
+- 本地 Markdown 中引用的绝对路径图片会在上传时复制到 `public/uploads/YYYY/MM/`，引用自动改写为 `/uploads/...`；确保原图可读且无版权问题。
+- 插件会弹窗提示 Git 操作成功或失败，若失败必须手动处理仓库状态并重新上传。
+- 新增占位符：`{filepath}` 为内容相对路径，`{assets}` 列出同步复制的资源文件，`{tags}` 为 frontmatter 标签列表（逗号分隔）。
+
+## 11. 部署与配置
+- Vercel 通过 `vercel.json` 固定 `installCommand=npm install`、`buildCommand=npm run build`、`outputDirectory=dist`。
+- 构建失败先在本地执行 `npm run build`/`pnpm build` 自检，再查看 Vercel 日志；禁止直接在远端修改构建命令。
+- 静态资源新增路径需同步在 PR/提交信息中说明，避免遗漏缓存或 CDN 配置。
+
+_最后更新：2025-10-04（补充自动化与部署规范）_
