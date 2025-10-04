@@ -565,8 +565,16 @@ a:hover {
   color: #e2e8f0;
   margin: 20px 0;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: pre;
+  word-break: normal;
+}
+
+.article-container :global(pre:hover) {
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.article-container :global(pre::-webkit-scrollbar) {
+  height: 0;
 }
 
 .article-container :global(pre::-webkit-scrollbar) {
@@ -594,9 +602,10 @@ a:hover {
 
 .post-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 48px;
+  grid-template-columns: minmax(0, 820px) 220px;
+  gap: 32px;
   align-items: start;
+  justify-content: center;
 }
 
 .toc {
