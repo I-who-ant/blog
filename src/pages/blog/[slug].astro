@@ -16,15 +16,65 @@ if (!match) {
   throw Astro.redirect('/blog');
 }
 
-const { Content } = await match.render();
+const { Content, headings } = await match.render();
 const { data } = match;
+const tocHeadings = headings.filter((heading) => heading.depth <= 3);
 ---
 
 <MainLayout>
-  <article class="article-container">
-    <PageHeader title={data.title}>
-      <time class="post-date">{data.date}</time>
-    </PageHeader>
-    <Content />
-  </article>
+  <div class="post-layout">
+    <article class="article-container">
+      <PageHeader title={data.title}>
+        <time class="post-date">{data.date}</time>
+      </PageHeader>
+      <Content />
+    </article>
+    {tocHeadings.length > 0 && (
+      <aside class="toc" aria-label="文章目录">
+        <h2 class="toc-title">目录</h2>
+        <nav class="toc-nav">
+          <ul class="toc-list">
+            {tocHeadings.map((heading) => (
+              <li class={`toc-item level-${heading.depth}`}>
+                <a class="toc-link" href={`#${heading.slug}`} data-target={heading.slug}>
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
+  {tocHeadings.length > 0 && (
+    <script is:inline>
+      const initToc = () => {
+        const links = Array.from(document.querySelectorAll('.toc-link'));
+        if (!links.length) return;
+        links[0].classList.add('active');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              links.forEach((link) => {
+                link.classList.toggle('active', link.dataset.target === entry.target.id);
+              });
+            }
+          });
+        }, { rootMargin: '0px 0px -70% 0px', threshold: 0.1 });
+
+        links.forEach((link) => {
+          const target = document.getElementById(link.dataset.target);
+          if (target) {
+            observer.observe(target);
+          }
+        });
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initToc);
+      } else {
+        initToc();
+      }
+    </script>
+  )}
 </MainLayout>

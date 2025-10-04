@@ -39,4 +39,9 @@
   - 扩展插件配置、热键与多语言文案，支持自定义仓库路径、文件命名模板以及可选 Git 命令，用于一键保存或推送。
   - 优化 `uploadUtils`，优先解析 Typora 文档中的 YAML frontmatter，将 `title`、`date`、`tags` 等元数据回写至 Astro 文件。
   - 更新插件 README，记录 Astro 集成使用方法；脚本 `install_linux.sh` 无需调整。
-- 说明：完成 Typora → Astro 的无缝写作链路，后续写作可在 Typora 端一键同步到本地仓库，再视需要执行构建或推送。
+  - 调整博客详情页：新增右侧目录（IntersectionObserver 高亮当前标题）、重制代码块配色与阴影，统一文章排版间距。
+- 说明：完成 Typora → Astro 的无缝写作链路，后续写作可在 Typora 端一键同步到本地仓库，再视需要执行构建或推送。操作步骤如下：
+  1. 关闭 Typora，进入插件仓库根目录 `typora_plugin/plugin/bin`，执行 `sudo ./install_linux.sh`（脚本已覆盖权限调整与 `window.html` 注入，无需额外修改）。
+  2. 若首次安装，复制 `plugin/global/settings/settings.default.toml` 为 `settings.user.toml`，确保 `[article_uploader]` 区段启用插件并在右键菜单加入 `article_uploader.upload_to_astro`。
+  3. 在 `settings.user.toml` 中配置：`repo_root="/home/<user>/.../starlight-main/examples/seeback-astro"`、`posts_dir="src/content/posts"`、`filename_pattern="{date}-{slug}.md"`、`auto_commit` 与 `git_cmd`（可选，例如 `git add {filename}` 或 `git add . && git commit -m "publish: {filename}"`）。
+  4. Typora 新建或编辑 Markdown 时可书写 YAML frontmatter；保存后右键选择“上传到 Astro”或按配置的热键，插件会写入目标仓库，必要时手动运行 `pnpm astro check`/`pnpm build` 并推送。
