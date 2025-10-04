@@ -56,6 +56,7 @@
 - 结构或规范调整需同步更新 `ASTRO_PROJECT_SPEC.md`；功能里程碑在 `PROGRESS_LOG.md` 标注日期与范围。
 - 架构理解、组件职责等补充说明写入 `UNDERSTAND.md` 以便共享知识。
 - 新成员入场时引用本手册；若流程或工具变动请及时修订。
+- 占位页（如 `/blog-soon`、`/404`）须保持居中展示，容器宽度控制在 720px，避免内容贴边；新增页面请复用 `.soon`/`.not-found` 样式或提供等效布局。
 
 ## 10. 自动化与上传规则
 - Typora 端启用 `article_uploader` 后，默认命令模板为 `git add '{filepath}' {assets} && git commit -m 'publish: {filename}' && git push`；如需调整请同步更新 `settings.user.toml` 并验证命令可重复执行。
