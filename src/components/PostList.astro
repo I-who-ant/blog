@@ -40,7 +40,9 @@ const {
           <a class="blog-link" href={`${basePath}/${post.slug}/`}>
             <h3 class="blog-title">{post.data.title}</h3>
           </a>
-          {showExcerpt && post.data.excerpt && <p class="blog-excerpt">{post.data.excerpt}</p>}
+          {showExcerpt && (post.data.description || post.data.excerpt) && (
+            <p class="blog-excerpt">{post.data.description || post.data.excerpt}</p>
+          )}
         </div>
       </li>
     ))}
