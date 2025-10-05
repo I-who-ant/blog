@@ -27,7 +27,11 @@ const {
         <div class="blog-left">
           <time class="blog-date">{post.data.date}</time>
           {post.data.tags && post.data.tags.length > 0 ? (
-            <span class="blog-category">#{post.data.tags[0]}</span>
+            <span class="blog-tags">
+              {post.data.tags.map((tag) => (
+                <span class="blog-tag">#{tag}</span>
+              ))}
+            </span>
           ) : (
             <span class="blog-category"># 未分类</span>
           )}
