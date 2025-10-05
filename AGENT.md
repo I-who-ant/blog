@@ -57,6 +57,7 @@
 - 架构理解、组件职责等补充说明写入 `UNDERSTAND.md` 以便共享知识。
 - 新成员入场时引用本手册；若流程或工具变动请及时修订。
 - 占位页（如 `/blog-soon`、`/404`）须保持居中展示，容器宽度控制在 720px，避免内容贴边；新增页面请复用 `.soon`/`.not-found` 样式或提供等效布局。
+- Markdown frontmatter 必须写成有效 YAML：使用半角引号，逗号不要用中文符号，多个标签按 `tags: ['思考', '收获']` 结构填写。Typora 插件会做一次符号归一化，但若 YAML 解析报错，文章不会上传。
 
 ## 10. 自动化与上传规则
 - Typora 端启用 `article_uploader` 后，默认命令模板为 `git add '{filepath}' {assets} && git commit -m 'publish: {filename}' && git push`；如需调整请同步更新 `settings.user.toml` 并验证命令可重复执行。
