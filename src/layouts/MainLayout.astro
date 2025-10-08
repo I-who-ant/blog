@@ -31,6 +31,56 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{Astro.props.title ?? 'seeback '} </title>
+    <script is:inline>
+      (() => {
+        if (typeof window === 'undefined') return;
+        const STORAGE_KEY = 'seeback-theme';
+        const root = document.documentElement;
+        const applyTheme = (theme) => {
+          const nextTheme = theme === 'light' ? 'light' : 'dark';
+          root.classList.toggle('theme-dark', nextTheme === 'dark');
+          root.classList.toggle('theme-light', nextTheme === 'light');
+          root.dataset.theme = nextTheme;
+        };
+        const resolveInitialTheme = () => {
+          const cached = window.localStorage.getItem(STORAGE_KEY);
+          if (cached === 'light' || cached === 'dark') {
+            return cached;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+        const setTheme = (theme) => {
+          applyTheme(theme);
+          window.localStorage.setItem(STORAGE_KEY, theme);
+        };
+        applyTheme(resolveInitialTheme());
+        const handleClick = (event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+            return;
+          }
+          event.preventDefault();
+          const switchTheme = () => {
+            const next = root.classList.contains('theme-dark') ? 'light' : 'dark';
+            setTheme(next);
+          };
+          if (!document.startViewTransition) {
+            switchTheme();
+            return;
+          }
+          document.startViewTransition(switchTheme);
+        };
+        const bindToggle = () => {
+          const logoLink = document.querySelector('.logo-link');
+          if (!logoLink) return;
+          logoLink.addEventListener('click', handleClick);
+        };
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          bindToggle();
+        } else {
+          document.addEventListener('DOMContentLoaded', bindToggle, { once: true });
+        }
+      })();
+    </script>
   </head>
   <body>
     <div class="basic-layout">

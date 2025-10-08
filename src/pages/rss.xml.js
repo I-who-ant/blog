@@ -12,7 +12,7 @@ export async function GET(context) {
   return rss({
     title: 'seeback の blog',
     description: '记录日常思考、学习心得与折腾笔记。',
-    site: context.site?.toString() ?? 'https://example.com',
+    site: context.site?.toString() ?? 'https://seeback.xyz',
     items: sorted.map((post) => ({
       title: post.data.title,
       description: post.data.description || post.data.excerpt || '',
