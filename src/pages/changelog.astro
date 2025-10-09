@@ -6,10 +6,11 @@ import PageHeader from '../components/PageHeader.astro';
 <MainLayout>
   <PageHeader title="Changelog" description="记录博客站点的关键演进节点。" />
   <ul class="timeline">
-    <li class="timeline-item">2024-05-09：完成 Astro 项目骨架与布局迁移。</li>
-    <li class="timeline-item">2024-05-09：引入 Content Collections，文章与友链数据改用 Markdown/JSON 管理。</li>
-    <li class="timeline-item">2025-10-03：集成 Typora ⇢ Astro 上传链路，自动生成 frontmatter、执行构建校验。</li>
-    <li class="timeline-item">2025-10-03：博客详情页新增目录、重置代码块暗色主题与排版间距。</li>
-    <li class="timeline-item">2025-10-04：上传流程自动搬运本地图片至 `public/uploads/`，并补充 Vercel 构建配置。</li>
+    <li class="timeline-item">2025-10-08：升级 Astro 至 5.14.1，同步刷新依赖并接入官方 @astrojs/mdx 集成。</li>
+    <li class="timeline-item">2025-10-03：完善 Typora ⇢ Astro 上传链路，自动生成 frontmatter 并支持一键写作同步。</li>
+    <li class="timeline-item">2025-10-03：博客详情页新增目录高亮、重制代码块主题与排版间距，Shiki 双主题上线。</li>
+    <li class="timeline-item">2025-10-03：上传流程自动复制图片到 public/uploads，新增 RSS 输出并完善写作自动化配置。</li>
+    <li class="timeline-item">2024-10-01：调整集合 schema 与 getStaticPaths，首次执行 npm run build 通过。</li>
+    <li class="timeline-item">2024-10-01：完成 Astro 项目骨架搭建、布局迁移，以及 Content Collections 初始化。</li>
   </ul>
 </MainLayout>
