@@ -64,6 +64,9 @@
   --accent: #8da2ff;
   --accent-strong: #cbd5f5;
   --accent-success: #16a34a;
+  --blockquote-border: rgba(189, 203, 231, 0.65);
+  --blockquote-bg: rgba(36, 49, 69, 0.78);
+  --blockquote-text: rgba(231, 237, 246, 0.9);
 }
 
 html.theme-dark {
@@ -115,6 +118,9 @@ html.theme-light {
   --accent: #2563eb;
   --accent-strong: #1d4ed8;
   --accent-success: #16a34a;
+  --blockquote-border: rgba(59, 130, 246, 0.35);
+  --blockquote-bg: rgba(236, 242, 254, 0.9);
+  --blockquote-text: rgba(46, 60, 89, 0.92);
 }
 
 html,
@@ -667,7 +673,7 @@ a:hover {
   scroll-margin-top: 96px;
 }
 
-.article-container :global(pre) {
+:where(.content-body pre, .article-container :global(pre)) {
   background: var(--bg-surface-alt);
   border: 1px solid var(--border-divider);
   border-radius: 14px;
@@ -683,30 +689,37 @@ a:hover {
   box-shadow: var(--card-shadow);
   white-space: pre;
   word-break: normal;
+  tab-size: 2;
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.45) rgba(22, 31, 45, 0.94);
 }
 
-.article-container :global(pre:hover) {
+:where(.content-body pre, .article-container :global(pre)):hover {
   scrollbar-color: rgba(196, 207, 240, 0.65) rgba(22, 31, 45, 0.94);
 }
 
-.article-container :global(pre::-webkit-scrollbar) {
+:where(.content-body pre, .article-container :global(pre))::-webkit-scrollbar {
   height: 8px;
 }
 
-.article-container :global(pre::-webkit-scrollbar-track) {
+:where(.content-body pre, .article-container :global(pre))::-webkit-scrollbar-track {
   background: rgba(22, 31, 45, 0.94);
   border-radius: 999px;
 }
 
-.article-container :global(pre::-webkit-scrollbar-thumb) {
+:where(.content-body pre, .article-container :global(pre))::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.45);
   border-radius: 999px;
 }
 
-.article-container :global(pre::-webkit-scrollbar-thumb:hover) {
+:where(.content-body pre, .article-container :global(pre))::-webkit-scrollbar-thumb:hover {
   background: rgba(196, 207, 240, 0.65);
+}
+
+:where(.content-body pre, .article-container :global(pre)) code {
+  display: block;
+  white-space: inherit;
+  color: inherit;
 }
 
 .soon {
@@ -741,21 +754,22 @@ a:hover {
   border-bottom-color: var(--accent);
 }
 
-.article-container :global(blockquote) {
+:where(.content-body blockquote, .article-container :global(blockquote)) {
   margin: 24px 0;
   padding: 18px 22px;
-  border-left: 4px solid rgba(129, 140, 248, 0.7);
-  background: var(--bg-surface);
-  color: var(--text-heading);
+  border-left: 4px solid var(--blockquote-border);
+  background: var(--blockquote-bg);
+  color: var(--blockquote-text);
   border-radius: 12px;
+  line-height: 1.75;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.article-container :global(blockquote p) {
+:where(.content-body blockquote, .article-container :global(blockquote)) p {
   margin: 0;
-  line-height: 1.8;
 }
 
-.article-container :global(blockquote + blockquote) {
+:where(.content-body blockquote, .article-container :global(blockquote)) + :where(.content-body blockquote, .article-container :global(blockquote)) {
   margin-top: -12px;
 }
 

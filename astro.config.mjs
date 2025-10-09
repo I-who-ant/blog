@@ -1,7 +1,12 @@
 import { defineConfig } from 'astro/config';
 
+import mdx from '@astrojs/mdx';
+
+import markdoc from '@astrojs/markdoc';
+
 export default defineConfig({
   site: 'https://seeback.xyz',
+
   markdown: {
     syntaxHighlight: 'shiki',
     shikiConfig: {
@@ -17,4 +22,6 @@ export default defineConfig({
       },
     },
   },
+
+  integrations: [mdx(), markdoc()],
 });
