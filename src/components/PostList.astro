@@ -16,6 +16,9 @@ const {
   showDate = true,
   emptyText = '暂无文章，欢迎稍后再来。',
 } = Astro.props as Props;
+
+const formatDate = (value: Date) =>
+  value.toISOString().split('T')[0];
 ---
 
 {posts.length === 0 ? (
@@ -25,7 +28,11 @@ const {
     {posts.map((post) => (
       <li class="blog-item">
         <div class="blog-left">
-          <time class="blog-date">{post.data.date}</time>
+          {showDate && (
+            <time class="blog-date" dateTime={post.data.date.toISOString()}>
+              {formatDate(post.data.date)}
+            </time>
+          )}
           {post.data.tags && post.data.tags.length > 0 ? (
             <span class="blog-tags">
               {post.data.tags.map((tag) => (

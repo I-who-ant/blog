@@ -5,7 +5,12 @@ import PageHeader from '../../components/PageHeader.astro';
 import PostList from '../../components/PostList.astro';
 
 const posts = await getCollection('posts');
-const sortedPosts = posts.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const sortedPosts = posts.toSorted((a, b) => {
+  const diff = b.data.date.valueOf() - a.data.date.valueOf();
+  if (diff !== 0) return diff;
+  // fallback：保持文件原始顺序（toSorted 是稳定排序）
+  return 0;
+});
 ---
 
 <MainLayout>

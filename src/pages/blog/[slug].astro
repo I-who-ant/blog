@@ -19,13 +19,14 @@ if (!match) {
 const { Content, headings } = await match.render();
 const { data } = match;
 const tocHeadings = headings.filter((heading) => heading.depth <= 3);
+const formattedDate = data.date.toISOString().split('T')[0];
 ---
 
 <MainLayout>
   <div class="post-layout">
     <article class="article-container">
       <PageHeader title={data.title}>
-        <time class="post-date">{data.date}</time>
+        <time class="post-date" dateTime={data.date.toISOString()}>{formattedDate}</time>
       </PageHeader>
       <Content />
     </article>

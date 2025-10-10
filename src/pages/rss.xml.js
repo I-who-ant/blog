@@ -3,11 +3,7 @@ import { getCollection } from 'astro:content';
 
 export async function GET(context) {
   const posts = await getCollection('posts');
-  const sorted = posts.sort((a, b) => {
-    const dateA = new Date(a.data.date || 0).getTime();
-    const dateB = new Date(b.data.date || 0).getTime();
-    return dateB - dateA;
-  });
+  const sorted = posts.toSorted((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   return rss({
     title: 'seeback の blog',
@@ -16,7 +12,7 @@ export async function GET(context) {
     items: sorted.map((post) => ({
       title: post.data.title,
       description: post.data.description || post.data.excerpt || '',
-      pubDate: post.data.date ? new Date(post.data.date) : undefined,
+      pubDate: post.data.date,
       link: `/blog/${post.slug}/`,
     })),
   });
