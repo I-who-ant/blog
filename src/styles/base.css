@@ -773,6 +773,14 @@ a:hover {
   margin-top: -12px;
 }
 
+:where(.content-body hr, .article-container :global(hr)) {
+  border: none;
+  border-top: 1px solid var(--border-divider);
+  margin: 32px 0;
+  opacity: 0.75;
+}
+
+# :where helps ensure we do not override Prism fine detail? comment not necessary maybe. remove hashed comment? We'll leave comment? No need to comment.
 .not-found {
   align-items: center;
   text-align: center;
