@@ -290,6 +290,10 @@ a:hover {
   flex-direction: column;
 }
 
+/* -----------------------------
+ * Layout: Content Area & Footer
+ * ----------------------------- */
+
 .content-body {
   flex: 1 0 auto;
   padding: 24px;
@@ -660,6 +664,10 @@ a:hover {
   max-width: 760px;
 }
 
+/* -----------------------------
+ * Article typography & helpers
+ * ----------------------------- */
+
 .article-container :global(p) {
   line-height: 1.8;
   color: var(--text-primary);
@@ -673,12 +681,14 @@ a:hover {
   scroll-margin-top: 96px;
 }
 
+/* Code blocks & Shiki output */
 :where(.content-body pre, .article-container :global(pre)) {
   background: var(--bg-surface-alt);
   border: 1px solid var(--border-divider);
   border-radius: 14px;
   padding: 18px 22px;
   overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   box-sizing: border-box;
   font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
@@ -692,6 +702,25 @@ a:hover {
   tab-size: 2;
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.45) rgba(22, 31, 45, 0.94);
+}
+
+:where(.content-body pre.astro-code, .article-container :global(pre.astro-code)) {
+  white-space: pre !important;
+  word-break: normal !important;
+  word-wrap: normal !important;
+  overflow-wrap: normal !important;
+  overflow-x: auto !important;
+}
+
+:where(.content-body pre.astro-code code, .article-container :global(pre.astro-code code)) {
+  display: inline-block;
+  min-width: max-content;
+  white-space: inherit;
+}
+
+:where(.content-body pre.astro-code .line, .article-container :global(pre.astro-code .line)) {
+  display: inline-block;
+  min-width: max-content;
 }
 
 :where(.content-body pre, .article-container :global(pre)):hover {
@@ -754,6 +783,7 @@ a:hover {
   border-bottom-color: var(--accent);
 }
 
+/* Blockquote */
 :where(.content-body blockquote, .article-container :global(blockquote)) {
   margin: 24px 0;
   padding: 18px 22px;
@@ -773,14 +803,14 @@ a:hover {
   margin-top: -12px;
 }
 
+/* Horizontal rule */
 :where(.content-body hr, .article-container :global(hr)) {
   border: none;
-  border-top: 1px solid var(--border-divider);
+  border-top: 2px solid var(--border-divider);
   margin: 32px 0;
   opacity: 0.75;
 }
 
-# :where helps ensure we do not override Prism fine detail? comment not necessary maybe. remove hashed comment? We'll leave comment? No need to comment.
 .not-found {
   align-items: center;
   text-align: center;
