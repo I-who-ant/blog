@@ -792,6 +792,8 @@ a:hover {
   color: var(--blockquote-text);
   border-radius: 12px;
   line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
