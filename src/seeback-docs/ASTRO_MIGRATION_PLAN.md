@@ -4,14 +4,12 @@
 
 ## 阶段 0：准备环境
 1. 进入 `starlight-main` 根目录：`cd /home/seeback/learingProject/seeback/blog/starlight-main`。
-2. 安装依赖管理工具（推荐 `pnpm`）：`npm install -g pnpm`（如已安装可跳过）。
-3. 在 `examples` 下创建新的 Astro 项目骨架：
+2. `seeback-astro` 已经初始化完毕，如需重新安装依赖执行：
    ```bash
-   pnpm create astro -- --template basics examples/seeback-astro
    cd examples/seeback-astro
-   pnpm install
+   npm install
    ```
-4. 清理模板多余页面，仅保留 `src/pages/index.astro` 作为占位；删除示例文档文件。
+3. 开发时使用 `npm run dev`，构建使用 `npm run build`；其他命令可参考 `package.json`。
 
 ## 阶段 1：迁移全局框架
 1. 在 `src/layouts/` 新建 `MainLayout.astro`，复制 `seebackのblog/src/layouts/BasicLayout.vue` 的结构与样式并适配 Astro（参照 `ASTRO_PROJECT_SPEC.md` 中的布局示例）。
@@ -37,13 +35,14 @@
    - 创建 `src/content/config.ts`，定义 `posts` 集合（字段包含 `title`、`date`、`excerpt`、`tags`）。
    - 将原 Vue 项目 Markdown/富文本内容转为 `.md` 文件放入 `src/content/posts/`。
 2. 迁移页面：
-   - `src/pages/blog/index.astro`：遍历 `posts` 集合生成文章列表。
-   - `src/pages/blog/[slug].astro`：渲染单篇文章（参照文档示例）。
-   - `src/pages/about.astro`：复制 `seebackのblog/src/pages/AboutPage.vue` 中的文本，重写为 Astro+CSS。
-   - `src/pages/link-friend.astro`：保持原空模板，未来从 `src/content/friends/friends.json` 中读取友链。
+   - `src/pages/blog/index.astro`：遍历 `posts` 集合生成文章列表（记得在页面层按日期排序）。
+   - `src/pages/blog/[slug].astro`：渲染单篇文章，输出目录与正文。
+   - `src/pages/about.astro`：复制 `seebackのblog/src/pages/AboutPage.vue` 中的文本。
+   - `src/pages/link-friend.astro`：读取 `src/content/friends/friends.json` 渲染友链。
    - `src/pages/changelog.astro`：迁移更新记录（如有）。
 3. 首页根据需要展示精选文章或最新动态，可直接读取 `posts` 并显示前 N 条。
-4. 若保留管理员后台，则保持 `/admin` 路由指向旧系统，不在 Astro 站内实现。
+4. 默认文章使用 `.md`，若需插入 Astro 组件可改成 `.mdx`，需要 Markdoc 标签时可改 `.mdoc`；相关配置在 `astro.config.mjs` 与 `markdoc.config.mjs`。
+5. 若保留管理员后台，则保持 `/admin` 路由指向旧系统，不在 Astro 站内实现。
 
 ## 阶段 3：资源迁移
 1. 将 `seebackのblog/public` 中的静态资源复制到 `seeback-astro/public`，注意去除仅后端使用的文件。
@@ -51,22 +50,22 @@
 3. 若原站点使用图标字体或外部脚本，检查是否仍需加载，尽量改用 Astro 内置 `<Image />` 或 SVG。
 
 ## 阶段 4：数据交互策略
-- **纯静态**：文章完全使用 Markdown；评论、点赞等功能可接入第三方服务（Giscus、Waline），无需 Spring Boot。
-- **混合模式**：
-  1. 保留 Spring Boot 服务并开放 REST API。
-  2. 在 Astro 中创建 `src/utils/api.ts`，封装 `fetch(import.meta.env.PUBLIC_API_BASE + '/blog/list')`。
-  3. 在页面中导入工具函数，通过 `await` 获取数据并渲染。
+- **纯静态**（当前模式）：文章、友链全部由 Content Collections 渲染，评论系统可后续择机接入第三方（Giscus、Waline 等）。
+- **混合模式**（如需对接 Spring Boot）：
+  1. 保留后端 REST API。
+  2. 在 `src/utils/api.ts` 中封装 `fetch(import.meta.env.PUBLIC_API_BASE + '/blog/list')` 等接口。
+  3. 页面通过 `await` 获取数据并渲染，注意处理异常和降级。
   4. `.env` 文件存储 API 基地址，提交代码前创建 `.env.example`。
 
 ## 阶段 5：构建与测试
-1. 本地运行 `pnpm dev`，逐页检查布局、导航、响应式表现。
-2. 运行 `pnpm astro check` 验证 schema 与类型。
-3. 构建产物：`pnpm build` → 输出 `dist/`。
-4. 如需预览生产版本：`pnpm preview`。
+1. 本地运行 `npm run dev`，逐页检查布局、导航、响应式表现。
+2. 运行 `npx astro sync`（如 schema 有改动）和 `npm run build` 验证类型与构建。
+3. 构建产物：`npm run build` → 输出 `dist/`。
+4. 如需预览生产版本：`npm run preview`。
 
 ## 阶段 6：部署
 1. 选择部署平台：Vercel / Netlify / Cloudflare Pages / 自有服务器。
-2. 配置构建命令：`pnpm build`，产物目录：`dist`。
+2. 配置构建命令：`npm run build`，产物目录：`dist`。
 3. 若保留 Spring Boot，需要：
    - 在同域或子域部署后端；
    - 配置反向代理或 CORS；

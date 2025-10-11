@@ -70,6 +70,8 @@ const data = await getCollection('posts');
 
 ## 🧩 组件功能详解
 
+> 所有可复用组件位于 `src/components/`，布局骨架集中在 `src/layouts/MainLayout.astro`。新增组件前优先查看是否已有类似实现。
+
 ### 1. PageHeader 组件
 
 **文件**: `src/components/PageHeader.astro`
@@ -128,9 +130,9 @@ interface Props {
 ```
 
 **特点**:
-- 高度可配置的文章列表组件
-- 支持摘要、日期的显示控制
-- 自动生成文章链接
+- 高度可配置的文章列表组件，可通过 props 控制基础路径、摘要、日期等显示。
+- 日期会格式化为 `YYYY-MM-DD` 并附带 `dateTime` 属性，方便 SEO 与辅助技术读取。
+- 列表排序不在组件内部处理，而是在页面（`blog/index.astro`）统一执行。
 
 ### 4. FriendList 组件
 
@@ -148,6 +150,14 @@ interface Props {
 - 显示友链列表
 - 支持外链安全属性 (`target="_blank" rel="noopener noreferrer"`)
 - 空状态提示
+
+### 5. Markdown 排版与 Shiki 高亮
+
+- 全局排版样式在 `src/styles/base.css` 中维护，`.content-body` 与 `.article-container` 下的 Markdown 元素会自动带有主题化样式：
+  - 引用 (`>`) 带左侧边框与背景，颜色随主题切换。
+  - 代码块托管给 Shiki，高亮主题 `github-light` / `one-dark-pro` 自动切换；`pre` 强制 `white-space: pre` 并启用横向滚动，保证 Typora 中写下的缩进在站点上保持一致。
+  - 水平分隔线需单独一行输入 `---`，样式为 2px 半透明线。
+- 默认文章使用 `.md`，若需插入 Astro 组件可改为 `.mdx`，需要 Markdoc 标签时可改为 `.mdoc`；配置文件 `markdoc.config.mjs` 已启用 Shiki 扩展，可按需添加自定义标签或变量。
 
 ### 5. SocialLinks 组件
 
@@ -188,6 +198,12 @@ const socialLinks: SocialLink[] = [
    - 内容区显示 "Friends" 标题
    - 友链列表展示
 
+### 排序与内容渲染细节
+
+- `getCollection('posts')` 默认按 slug 字典序返回数据。页面层使用 `posts.toSorted((a, b) => b.data.date.valueOf() - a.data.date.valueOf())`，以 `Date` 时间戳倒序呈现文章。
+- 建议在 frontmatter 中写入带时区的 ISO 字符串（如 `2025-10-10T21:30:00+08:00`），确保同一天多篇文章能按预期顺序显示。
+- RSS (`src/pages/rss.xml.js`) 与文章详情页复用了同样的排序逻辑，且在详情页中通过 `match.render()` 提供目录（`headings`）与正文（`Content`）。
+
 ### 组件实例化顺序
 
 ```
@@ -208,10 +224,10 @@ const socialLinks: SocialLink[] = [
 ```typescript
 // src/content/config.ts
 const posts = defineCollection({
-  type: 'content',  // Markdown 文件
+  type: 'content',  // Markdown / MDX / MDOC 均可在此集合渲染
   schema: z.object({
     title: z.string(),
-    date: z.string(),
+    date: z.coerce.date(),          // 自动转为 Date 对象，便于排序与格式化
     excerpt: z.string().optional(),
     tags: z.array(z.string()).optional(),
   }),
@@ -227,6 +243,8 @@ const friends = defineCollection({
 });
 ```
 
+> 提示：如果文章需要 Markdoc 标签或引入 Astro 组件，直接将文件扩展名改为 `.mdoc` 或 `.mdx` 即可；集合 schema 无需额外修改。
+
 ### 数据获取方式
 
 ```astro
@@ -239,6 +257,8 @@ const friends = await getEntry('friends', 'friends');
 // 获取单篇文章 (动态路由)
 const post = await getEntry('posts', Astro.params.slug);
 ```
+
+➡️ `posts` 集合的 `date` 已自动转换为 `Date` 对象，页面层排序可使用 `posts.toSorted((a, b) => b.data.date.valueOf() - a.data.date.valueOf())`。若同一天需要自定义顺序，可在 frontmatter 中写到具体时间（如 `2025-10-10T20:30:00+08:00`）。
 
 ## 🎨 样式架构
 
@@ -354,25 +374,6 @@ console.log('页面数据:', data);  // 服务端日志
 4. **数据类型安全** - 使用 TypeScript 接口确保类型安全
 5. **响应式优先** - 所有组件都考虑了移动端适配
 
-## 🎨 图标系统
-
-### 导航图标
-项目采用灰色简约风格的符号图标，提供清晰的视觉层次：
-
-#### 主导航图标
-- **⌂ Home** - 首页
-- **</> Projects** - 项目展示
-- **◉ Writings** - 文章/博客
-- **⚭ Friends** - 友链
-- **♡ Privacy Policy** - 隐私政策
-
-#### 社交链接图标 (Online 区域)
-- **⚡ GitHub** - 代码仓库
-- **▶ Telegram** - 即时通讯
-- **◐ Twitter** - 社交媒体
-- **◈ Steam** - 游戏平台
-- **◼ Facebook** - 社交网络
-- **△ Keybase** - 加密通讯
 
 ### 技术实现
 
